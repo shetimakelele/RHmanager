@@ -14,6 +14,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        DbInitializer.Initialize(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Une erreur s'est produite lors du seed de la base de données.");
+    }
+}
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
