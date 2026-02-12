@@ -5,7 +5,7 @@ namespace RHmanager.Models
     public class Department
     {
         [Key]
-        public int DepartmentId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(100)]

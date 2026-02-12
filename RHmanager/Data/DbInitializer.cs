@@ -84,7 +84,7 @@ namespace RHmanager.Data
                 PhoneNumber = "0601020304",
                 Position = "Directrice IT",
                 HireDate = new DateTime(2018, 3, 15),
-                DepartmentId = departments[0].DepartmentId, // Informatique
+                DepartmentId = departments[0].Id, // Informatique
                 AnnualLeaveDays = 30,
                 RemainingLeaveDays = 22,
                 ManagerId = null // Pas de manager (c'est une directrice)
@@ -99,7 +99,7 @@ namespace RHmanager.Data
                 PhoneNumber = "0602030405",
                 Position = "Directeur RH",
                 HireDate = new DateTime(2017, 6, 1),
-                DepartmentId = departments[1].DepartmentId, // RH
+                DepartmentId = departments[1].Id, // RH
                 AnnualLeaveDays = 30,
                 RemainingLeaveDays = 25,
                 ManagerId = null
@@ -120,7 +120,7 @@ namespace RHmanager.Data
                     PhoneNumber = "0603040506",
                     Position = "Développeur Full Stack",
                     HireDate = new DateTime(2020, 9, 1),
-                    DepartmentId = departments[0].DepartmentId, // Informatique
+                    DepartmentId = departments[0].Id, // Informatique
                     AnnualLeaveDays = 25,
                     RemainingLeaveDays = 18,
                     ManagerId = manager1.Id
@@ -134,7 +134,7 @@ namespace RHmanager.Data
                     PhoneNumber = "0604050607",
                     Position = "Développeuse Frontend",
                     HireDate = new DateTime(2021, 2, 15),
-                    DepartmentId = departments[0].DepartmentId, // Informatique
+                    DepartmentId = departments[0].Id, // Informatique
                     AnnualLeaveDays = 25,
                     RemainingLeaveDays = 20,
                     ManagerId = manager1.Id
@@ -148,7 +148,7 @@ namespace RHmanager.Data
                     PhoneNumber = "0605060708",
                     Position = "Chargé de Recrutement",
                     HireDate = new DateTime(2019, 11, 10),
-                    DepartmentId = departments[1].DepartmentId, // RH
+                    DepartmentId = departments[1].Id, // RH
                     AnnualLeaveDays = 25,
                     RemainingLeaveDays = 15,
                     ManagerId = manager2.Id
@@ -162,7 +162,7 @@ namespace RHmanager.Data
                     PhoneNumber = "0606070809",
                     Position = "Assistante RH",
                     HireDate = new DateTime(2022, 1, 5),
-                    DepartmentId = departments[1].DepartmentId, // RH
+                    DepartmentId = departments[1].Id, // RH
                     AnnualLeaveDays = 25,
                     RemainingLeaveDays = 23,
                     ManagerId = manager2.Id
@@ -176,7 +176,7 @@ namespace RHmanager.Data
                     PhoneNumber = "0607080910",
                     Position = "Commercial Senior",
                     HireDate = new DateTime(2019, 4, 20),
-                    DepartmentId = departments[2].DepartmentId, // Commercial
+                    DepartmentId = departments[2].Id, // Commercial
                     AnnualLeaveDays = 25,
                     RemainingLeaveDays = 12,
                     ManagerId = null // Pas de manager pour l'instant

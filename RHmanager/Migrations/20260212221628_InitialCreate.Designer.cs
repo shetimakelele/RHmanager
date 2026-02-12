@@ -12,7 +12,7 @@ using RHmanager.Data;
 namespace RHmanager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260211205301_InitialCreate")]
+    [Migration("20260212221628_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace RHmanager.Migrations
 
             modelBuilder.Entity("RHmanager.Models.Department", b =>
                 {
-                    b.Property<int>("DepartmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(100)
@@ -42,7 +42,7 @@ namespace RHmanager.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("DepartmentId");
+                    b.HasKey("Id");
 
                     b.ToTable("Departments");
                 });
