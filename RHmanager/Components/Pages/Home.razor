@@ -1,24 +1,170 @@
 ﻿@page "/"
+@using RHmanager.Dtos
+@using RHmanager.Helpers
+@rendermode InteractiveServer
+@inject IEmployeeService EmployeeService
+@inject ILeaveRequestService LeaveRequestService
+@inject IDepartmentService DepartmentService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Tableau de bord - HR Leave Management</PageTitle>
 
-<h1>Hello</h1>
+<div class="container-fluid mt-4">
+    <h1 class="display-5 mb-4">Tableau de bord RH</h1>
 
+    @if (isLoading)
+    {
+        <!-- Spinner de chargement -->
+        <div class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Section 1 : Statistiques  -->
+        <div class="row g-4 mb-4">
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="display-4">Bienvenue sur RH  Manager</h1>
-            <p class="lead">Système de gestion des congés RH</p>
-
-            <div class="alert alert-info mt-4" role="alert">
-                <h4 class="alert-heading">Projet en développement</h4>
-                <p>Application de gestion des employés, départements et demandes de congés.</p>
+            <!-- Carte Employés -->
+            <div class="col-md-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Employés</h5>
+                        <h2 class="card-text">@totalEmployees</h2>
+                        <small>Total actifs</small>
+                    </div>
+                </div>
             </div>
 
-            <button class="btn btn-primary btn-lg mt-3">
-                Commencer
-            </button>
+            <!-- Carte Départements -->
+            <div class="col-md-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Départements</h5>
+                        <h2 class="card-text">@totalDepartments</h2>
+                        <small>Actifs</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte Demandes en attente -->
+            <div class="col-md-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">En attente</h5>
+                        <h2 class="card-text">@pendingRequests</h2>
+                        <small>Demandes à valider</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte Approuvées ce mois -->
+            <div class="col-md-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title">Ce mois</h5>
+                        <h2 class="card-text">@approvedThisMonth</h2>
+                        <small>Congés approuvés</small>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
+
+        <!-- Section 2 : Demandes récentes et stats -->
+        <div class="row">
+
+            <!-- Colonne gauche : Demandes récentes -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Demandes de congés récentes</h5>
+                    </div>
+                    <div class="card-body">
+
+                        @if (recentRequests.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Employé</th>
+                                            <th>Type</th>
+                                            <th>Période</th>
+                                            <th>Jours</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var request in recentRequests)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @request.Employee.FirstName @request.Employee.LastName
+                                                </td>
+                                                <td>
+                                                    @request.LeaveType.Name
+                                                </td>
+                                                <td>
+                                                    @request.StartDate.ToString("dd/MM/yyyy")
+                                                    -
+                                                    @request.EndDate.ToString("dd/MM/yyyy")
+                                                </td>
+                                                <td>
+                                                    @request.NumberOfDays
+                                                </td>
+                                                <td>
+                                                    <span class="badge @LeaveRequestHelper.GetStatusBadgeClass(request.Status)">
+                                                        @LeaveRequestHelper.GetStatusText(request.Status)
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted">Aucune demande récente</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colonne droite : Stats départements -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Répartition par département</h5>
+                    </div>
+                    <div class="card-body">
+
+                        @if (departmentStats.Any())
+                        {
+                            <ul class="list-group list-group-flush">
+                                @foreach (var stat in departmentStats)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        @stat.DepartmentName
+                                        <span class="badge bg-primary rounded-pill">
+                                            @stat.EmployeeCount
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">Aucune donnée disponible</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
 </div>
+

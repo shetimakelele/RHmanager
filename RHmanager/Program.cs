@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using RHmanager.Components;
 using RHmanager.Data;
+using RHmanager.Services.Implementation;
+using RHmanager.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,11 @@ builder.Services.AddRazorComponents()
 // Ajout Entity Framework avec SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Services metier
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
 
 var app = builder.Build();
 
