@@ -1,0 +1,12 @@
+﻿@using RHmanager.Helpers
+
+
+
+@if (MessageHelper.HasMessage)
+{
+    <div class="alert @MessageHelper.GetAlertClass() alert-dismissible fade show mt-3" role="alert">
+        @MessageHelper.Message
+        <button type="button" class="btn-close" @onclick="MessageHelper.Clear"></button>
+    </div>
+}
+
